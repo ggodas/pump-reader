@@ -1,0 +1,17 @@
+/.idea
+/virtenv
+**.pyc
+/lib
+/lib_win
+/dev_lib
+/venv
+/dist
+/test/testenv/htmlcov
+/test/testenv/reports
+/test/testenv/.coverage
+/python_path.bat
+node_modules
+.serverless
+/*.log*
+/logs/*.log
+/.aws-sam/build

@@ -1,0 +1,9 @@
+{
+  "log": {
+    "log_level": "INFO"
+  },
+  "rfid": {
+    "host": "localhost",
+    "port": "8888"
+  }
+}
