@@ -8,7 +8,29 @@ from src.devicereader import RFIDReaderImpl
 from src.service.interactor import RefuellingProcessInteractor
 
 logger = logging.getLogger("FleetControl")
+rfid_detector_interactor = RefuellingProcessInteractor()
 
+count = 0
+
+async def rfid_worker(loop):
+    rfid_reader = RFIDReaderImpl("localhost", 8888, 1, loop)
+    await rfid_reader.read_forever(rfid_detector_interactor.on_rfid_detect)
+
+
+async def encoder_worker(loop):
+    while True:
+        await asyncio.sleep(0.01)
+        global count
+        count += 1
+        print("Second Worker Executed {}".format(count))
+
+
+async def pump_handle(loop):
+    while True:
+        await asyncio.sleep(0.01)
+        global count
+        count += 1
+        print("Thirdy Worker Executed {}".format(count))
 
 def main():
     log_path = config_path = os.environ["CONFIG_PATH"]
@@ -25,20 +47,6 @@ def main():
     if "http" in conf:
         host = conf["rfid"]["host"]
         port = conf["rfid"]["port"]
-
-    rfid_detector_interactor = RefuellingProcessInteractor()
-
-    async def rfid_worker(loop):
-        rfid_reader = RFIDReaderImpl("localhost", 8888, 1, loop)
-        await rfid_reader.read_forever(rfid_detector_interactor.on_rfid_detect)
-
-    async def encoder_worker(loop):
-        while True:
-            await asyncio.sleep(1)
-            print("Second Worker Executed")
-
-    async def pump_handle(loop):
-
 
     loop = asyncio.get_event_loop()
     try:

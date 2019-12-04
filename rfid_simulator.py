@@ -17,9 +17,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             conn.sendall("Said Hello".encode())
             sleep(10000)
             count += 1
-            if count >= 10:
-                conn.detach()
-                conn.close()
-                s.detach()
-                s.close()
-                break
+            # if count >= 10:
+            #     conn.detach()
+            #     conn.close()
+            #     s.detach()
+            #     s.close()
+            #     break
