@@ -23,10 +23,23 @@
 
 . /lib/lsb/init-functions
 
+MARCH=$(uname -m)
+OS=$(uname)
+echo $OS
+echo "$OS" = "Linux"
+if [ "$OS" = "Linux" ]; then
+	LINUXFLAVOR=$(cat /etc/os-release | grep "^ID=" | cut -d "=" -f 2 | sed 's/"//g')
+	BASEBINDIR=$(pwd)/mwsdk/linux-$LINUXFLAVOR-$MARCH
+fi
+
+echo $BASEBINDIR
+
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=/home/george/projects/fleet-control-device/sdk/linux-ubuntu/supervisor/bin/supervisord #/usr/bin/supervisord
+DAEMON=$BASEBINDIR/supervisor/bin/supervisord #/usr/bin/supervisord
 NAME=supervisord
 DESC=supervisor
+
+echo $DAEMON
 
 test -x $DAEMON || exit 0
 
