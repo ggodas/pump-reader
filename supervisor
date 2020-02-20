@@ -25,26 +25,26 @@
 
 MARCH=$(uname -m)
 OS=$(uname)
-echo $OS
-echo "$OS" = "Linux"
+
 if [ "$OS" = "Linux" ]; then
 	LINUXFLAVOR=$(cat /etc/os-release | grep "^ID=" | cut -d "=" -f 2 | sed 's/"//g')
-	BASEBINDIR=$(pwd)/mwsdk/linux-$LINUXFLAVOR-$MARCH
+	BASEBINDIR=$(pwd)/sdk/linux-$LINUXFLAVOR-$MARCH
 fi
 
-echo $BASEBINDIR
+PROJ_DIR=$(pwd)
 
-PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-DAEMON=$BASEBINDIR/supervisor/bin/supervisord #/usr/bin/supervisord
+#set -x #echo on
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$BASEBINDIR/supervisor/supervisor:$BASEBINDIR/supervisor/bin
+#DAEMON="$BASEBINDIR/supervisor/supervisor/supervisord.py" #/usr/bin/supervisord
+DAEMON=$BASEBINDIR/supervisor/supervisord #/usr/bin/supervisord
 NAME=supervisord
 DESC=supervisor
 
-echo $DAEMON
 
 test -x $DAEMON || exit 0
 
 RETRY=TERM/30/KILL/5
-LOGDIR=data/server/log #/var/log/supervisor
+LOGDIR=$PROJ_DIR/data/server/log #/var/log/supervisor
 PIDFILE=/var/run/$NAME.pid
 DODTIME=5                   # Time to wait for the server to die, in seconds
                             # If this value is set too low you might not
@@ -52,12 +52,11 @@ DODTIME=5                   # Time to wait for the server to die, in seconds
                             # 'restart' will not work
 
 # Include supervisor defaults if available
-if [ -f /etc/default/supervisor ] ; then
-	. /etc/default/supervisor
-fi
+#if [ -f /etc/default/supervisor ] ; then
+#	. /etc/default/supervisor
+#fi
 #DAEMON_OPTS="-c /etc/supervisor/supervisord.conf $DAEMON_OPTS"
-DAEMON_OPTS="-c data/server/bundles/supervisor/supervisord.conf $DAEMON_OPTS"
-
+DAEMON_OPTS="-c $PROJ_DIR/data/server/supervisor/supervisord.conf -l $PROJ_DIR/data/server/log/supervisord.log $DAEMON_OPTS"
 set -e
 
 running_pid()

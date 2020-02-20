@@ -370,4 +370,6 @@ def go(options): # pragma: no cover
         pass
 
 if __name__ == "__main__": # pragma: no cover
+    import pydevd_pycharm
+    pydevd_pycharm.settrace('localhost', port=9135, stdoutToServer=True, stderrToServer=True)
     main()
