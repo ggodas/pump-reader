@@ -32,7 +32,7 @@ if [ "$OS" = "Linux" ]; then
 fi
 
 PROJ_DIR=$(pwd)
-
+export PROJ_DIR
 #set -x #echo on
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$BASEBINDIR/supervisor/supervisor:$BASEBINDIR/supervisor/bin
 #DAEMON="$BASEBINDIR/supervisor/supervisor/supervisord.py" #/usr/bin/supervisord

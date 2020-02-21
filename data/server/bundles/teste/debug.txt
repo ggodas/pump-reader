@@ -1,0 +1,1 @@
+/home/george/Downloads/pycharm-professional-2019.2.3/pycharm-2019.2.3/debug-eggs/pydevd-pycharm.egg
