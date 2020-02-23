@@ -40,7 +40,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:$BASEBINDIR/su
 DAEMON=$BASEBINDIR/supervisor/supervisord #/usr/bin/supervisord
 NAME=supervisord
 DESC=supervisor
-
+echo $DAEMON
 
 test -x $DAEMON || exit 0
 
