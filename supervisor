@@ -21,7 +21,7 @@
 #                    subprocesses.
 ### END INIT INFO
 
-. /lib/lsb/init-functions
+#. /lib/lsb/init-functions
 
 MARCH=$(uname -m)
 OS=$(uname)
@@ -30,7 +30,8 @@ if [ "$OS" = "Linux" ]; then
 	LINUXFLAVOR=$(cat /etc/os-release | grep "^ID=" | cut -d "=" -f 2 | sed 's/"//g')
 	BASEBINDIR=$(pwd)/sdk/linux-$LINUXFLAVOR-$MARCH
 fi
-
+echo $BASEBINDIR
+source $BASEDIR/python/bin/activate
 PROJ_DIR=$(pwd)
 export PROJ_DIR
 #set -x #echo on
